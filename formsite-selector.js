@@ -34,20 +34,21 @@ function validateConfig() {
 }
 
 function getForms(val) {
-  $.ajax({
-    url: "https://api.hubapi.com/forms/v2/forms",
-    dataType: "json",
+  axios.get('https://api.hubapi.com/crm/v3/objects/contacts',
+  {
     headers: {
-      Authorization: "bearer " + config.apiKey,
-    },
-    success: function (response) {
-      forms = response.forms;
-      fillDropDown(val);
-    },
-    error: function (error) {
-      console.log(error);
-    },
-  });
+      'Authorization': `Bearer ${config.apiKey}`,
+      'Content-Type': 'application/json'
+    }
+  },
+  success: function (response) {
+    forms = response.forms;
+    fillDropDown(val);
+  },
+  (err, data) => {
+    // Handle the API response
+  }
+);
 }
 
 function fillDropDown(val) {
