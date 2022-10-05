@@ -37,7 +37,7 @@ function validateConfig() {
 
 
 function getForms(val) {
-  axios.get('https://api.hubapi.com/crm/v3/objects/contacts',
+  axios.get('https://api.hubapi.com/forms/v2/forms',
     {
       headers: {
         'Authorization': `Bearer ${config.apiKey}`,
