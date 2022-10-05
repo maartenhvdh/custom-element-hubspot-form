@@ -23,32 +23,32 @@ function updateSize() {
 function validateConfig() {
   if (!config.apiEndpoint) {
     console.error(
-      "Missing Formsite API base URL. Please provide apiEndpoint within the custom element JSON config."
+      "Missing Hubspot API base URL. Please provide apiEndpoint within the custom element JSON config."
     );
   }
   if (!config.apiKey) {
     console.error(
-      "Missing Formsite API key. Please provide apiKey within the custom element JSON config."
+      "Missing Hubspot API key. Please provide apiKey within the custom element JSON config."
     );
   }
 }
 
 function getForms(val) {
   axios.get('https://api.hubapi.com/crm/v3/objects/contacts',
-  {
-    headers: {
-      'Authorization': `Bearer ${config.apiKey}`,
-      'Content-Type': 'application/json'
+    {
+      headers: {
+        'Authorization': `Bearer ${config.apiKey}`,
+        'Content-Type': 'application/json'
+      }
+    },
+    (success, response) => {
+      forms = response.forms;
+      fillDropDown(val);
+    },
+    (err, data) => {
+      // Handle the API response
     }
-  },
-  success: function (response) {
-    forms = response.forms;
-    fillDropDown(val);
-  },
-  (err, data) => {
-    // Handle the API response
-  }
-);
+  );
 }
 
 function fillDropDown(val) {
@@ -69,8 +69,8 @@ function renderSelected(form) {
   if (form) {
     $titleText.html(
       "<b>Selected form:</b> " +
-        form.name +
-        ` <a class="remove" onclick="remove()">Remove</a>`
+      form.name +
+      ` <a class="remove" onclick="remove()">Remove</a>`
     );
     $titleText.addClass("title--selected");
   } else {
