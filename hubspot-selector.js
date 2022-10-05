@@ -1,4 +1,5 @@
 
+
 var currentValue = null;
 var isDisabled = true;
 var config = null;
@@ -34,22 +35,25 @@ function validateConfig() {
   }
 }
 
+
 function getForms(val) {
-  $.ajax({
-    url: "https://api.hubapi.com/forms/v2/forms",
-    dataType: "json",
-    headers: {
-      Authorization: "Bearer " + config.apiKey,
+  axios.get('https://api.hubapi.com/crm/v3/objects/contacts',
+    {
+      headers: {
+        'Authorization': `Bearer ${config.apiKey}`,
+        'Content-Type': 'application/json'
+      }
     },
-    success: function (response) {
-      console.log("test")
+    (success, response) => {
+      console.log("test maarten")
+      console.log(response.forms)
       forms = response.forms;
       fillDropDown(val);
     },
-    error: function (error) {
-      console.log(error);
-    },
-  });
+    (err, data) => {
+      // Handle the API response
+    }
+  );
 }
 
 function fillDropDown(val) {
